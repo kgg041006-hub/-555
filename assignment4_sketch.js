@@ -106,10 +106,7 @@ function draw() {
   strokeWeight(1);
   rect(0.5, 0.5, width - 1, height - 1);
   
-  if (frameCount === 1 && !recording) {
-    recording = true;
-    saveGif('Sketch', 10); 
-  }
+
 }
 
 
