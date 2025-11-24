@@ -284,4 +284,3 @@ function mousePressed() {
   smileOn = !smileOn;
   clothesColor = smileOn ? 40 : 30;
 }
-    
