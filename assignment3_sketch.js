@@ -37,11 +37,9 @@ function setup() {
 function draw() {
   background(bgCol);
 
-  // 캐릭터 이동 제한
   posX = constrain(posX, 120, CANVAS_W - 120);
   posY = constrain(posY, 120, CANVAS_H - 40);
 
-  // 깜박임
   const t = frameCount;
   if (t - lastBlink > 120 && (t % 240) < 6) {
     blink = true;
@@ -62,18 +60,17 @@ function drawCharacter(CENTER_X, CENTER_Y) {
   const pearl = color(...PEARL_COLOR);
   const clothes = color(clothesColor);
 
-  noStroke();
-
   // 목
+  noStroke();
   const NECK_Y = CENTER_Y + FACE_H / 2 - 40;
   fill(skin);
   rect(CENTER_X - 30, NECK_Y, 60, 40);
 
-  // 어깨/몸
+  // 어깨/몸통
   const NECK_X_OFFSET = 50;
   const TORSO_Y_START = CENTER_Y + FACE_H / 2;
-  fill(clothes);
 
+  fill(clothes);
   beginShape();
   vertex(CENTER_X - NECK_X_OFFSET - 5, NECK_Y + 5);
   vertex(CENTER_X + NECK_X_OFFSET + 5, NECK_Y + 5);
@@ -125,32 +122,47 @@ function drawCharacter(CENTER_X, CENTER_Y) {
   fill(skin);
   ellipse(CENTER_X, CENTER_Y, FACE_W, FACE_H);
 
-  // 옆머리(왼쪽)
+  // 옆머리 (왼)
   const HAIR_SIDE_Y = CENTER_Y - 40;
   const HAIR_BOTTOM_Y = CANVAS_H;
 
   fill(hair);
   beginShape();
-  vertex(CENTER_X - FACE_W/2 - 20, CENTER_Y - 45);
-  bezierVertex(CENTER_X - FACE_W/2 - 5, HAIR_SIDE_Y + 20, CENTER_X - FACE_W/2 - 25, NECK_Y + 5, CENTER_X - FACE_W/2 - 20, NECK_Y + 5);
-  vertex(CENTER_X - FACE_W/2 - 20, HAIR_BOTTOM_Y);
-  vertex(CENTER_X - FACE_W/2 + 20, HAIR_BOTTOM_Y);
-  vertex(CENTER_X - FACE_W/2 + 20, NECK_Y + 5);
+  vertex(CENTER_X - FACE_W / 2 - 20, CENTER_Y - 45);
+  bezierVertex(
+    CENTER_X - FACE_W / 2 - 5,
+    HAIR_SIDE_Y + 20,
+    CENTER_X - FACE_W / 2 - 25,
+    NECK_Y + 5,
+    CENTER_X - FACE_W / 2 - 20,
+    NECK_Y + 5
+  );
+  vertex(CENTER_X - FACE_W / 2 - 20, HAIR_BOTTOM_Y);
+  vertex(CENTER_X - FACE_W / 2 + 20, HAIR_BOTTOM_Y);
+  vertex(CENTER_X - FACE_W / 2 + 20, NECK_Y + 5);
   endShape(CLOSE);
 
-  // 옆머리(오른쪽)
+  // 옆머리 (오)
   fill(hair);
   beginShape();
-  vertex(CENTER_X + FACE_W/2 + 20, CENTER_Y - 45);
-  bezierVertex(CENTER_X + FACE_W/2 + 5, HAIR_SIDE_Y + 20, CENTER_X + FACE_W/2 + 25, NECK_Y + 5, CENTER_X + FACE_W/2 + 20, NECK_Y + 5);
-  vertex(CENTER_X + FACE_W/2 + 20, HAIR_BOTTOM_Y);
-  vertex(CENTER_X + FACE_W/2 - 20, HAIR_BOTTOM_Y);
-  vertex(CENTER_X + FACE_W/2 - 20, NECK_Y + 5);
+  vertex(CENTER_X + FACE_W / 2 + 20, CENTER_Y - 45);
+  bezierVertex(
+    CENTER_X + FACE_W / 2 + 5,
+    HAIR_SIDE_Y + 20,
+    CENTER_X + FACE_W / 2 + 25,
+    NECK_Y + 5,
+    CENTER_X + FACE_W / 2 + 20,
+    NECK_Y + 5
+  );
+  vertex(CENTER_X + FACE_W / 2 + 20, HAIR_BOTTOM_Y);
+  vertex(CENTER_X + FACE_W / 2 - 20, HAIR_BOTTOM_Y);
+  vertex(CENTER_X + FACE_W / 2 - 20, NECK_Y + 5);
   endShape(CLOSE);
 
   // 눈썹
   stroke(hair);
   strokeWeight(1.5);
+
   const BROW_Y = CENTER_Y - 45;
   const BROW_GAP = 10;
 
@@ -159,11 +171,12 @@ function drawCharacter(CENTER_X, CENTER_Y) {
 
   noStroke();
 
-  // 눈
+  // 눈 위치
   const eyeLx = CENTER_X - 35;
   const eyeRx = CENTER_X + 35;
   const eyeY = CENTER_Y - 10;
 
+  // 눈 흰자
   fill(eyeWhite);
   ellipse(eyeLx, eyeY, 40, 28);
   ellipse(eyeRx, eyeY, 40, 28);
@@ -175,6 +188,7 @@ function drawCharacter(CENTER_X, CENTER_Y) {
     line(eyeRx - 20, eyeY, eyeRx + 20, eyeY);
     noStroke();
   } else {
+    // 시선 따라가기
     const lookAmt = 5;
     const tx = constrain(map(mouseX, 0, width, -lookAmt, lookAmt), -lookAmt, lookAmt);
     const ty = constrain(map(mouseY, 0, height, -lookAmt, lookAmt), -lookAmt, lookAmt);
@@ -254,6 +268,7 @@ function keyPressed() {
     saveGif('myCharacter', 10);
   }
 
+  // 스페이스바: 놀란 표정
   if (keyCode === 32) {
     surprised = true;
   }
@@ -269,3 +284,4 @@ function mousePressed() {
   smileOn = !smileOn;
   clothesColor = smileOn ? 40 : 30;
 }
+    
